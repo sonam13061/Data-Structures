@@ -392,29 +392,42 @@ public class Main {
       tail = temp;
       tail.next = null;
     }
-
-    public boolean IsPalindrome() {
-     Node mid=midNode(head,tail);
-     LinkedList temp=new LinkedList();
-     temp.head=mid.next;
-     temp.tail=this.tail;
-     temp.size=this.size/2;
-     mid.next=null;
-     temp.reversePI();
-     Node t1=this.head;
-     Node t2=temp.head;
-      boolean isPalin=true; 
-     while(t1!=null && t2!=null){
-         if(t1.data!=t2.data){
-             isPalin=false;
-             break;
-         }
-         t1=t1.next;
-         t2=t2.next;
+   
+   public static int AddTwoLinkedListHelper(Node head1,int fs,Node head2,int ss,LinkedList ans){
+       if(fs==0 && ss==0){
+           //If size of both are zero,then carry will be 0.
+           return 0;
+       }
+       //If size of 1st is greater than second,then only first LL will contribute int ans/
+       if(fs>ss){
+          int carry= AddTwoLinkedListHelper(head1.next,fs-1,head2,ss,ans);
+          int sum=head1.data+carry;
+           ans.addFirst(sum%10);
+           return sum/10; //carry
+       }
+       //If size of 2nd is greater,then only second will contribute.
+       else if(ss>fs){
+           int carry=AddTwoLinkedListHelper(head1,fs,head2.next,ss-1,ans);
+           int sum=head2.data+carry;
+           ans.addFirst(sum%10);
+           return sum/10; //carry
+       }
+       //If size of both are equal then both will contribute.
+       else{
+           int carry=AddTwoLinkedListHelper(head1.next,fs-1,head2.next,ss-1,ans);
+           int sum=head1.data+head2.data+carry;
+           ans.addFirst(sum%10);
+           return sum/10; //carry
+       }
+   }
+    public static LinkedList addTwoLists(LinkedList one, LinkedList two) {
+      // write your code here
+      LinkedList ans=new LinkedList();
+     int carry= AddTwoLinkedListHelper(one.head,one.size,two.head,two.size,ans);
+     if(carry==1){
+         ans.addFirst(1);
      }
-     temp.reversePI();
-     mid.next=temp.head;
-     return isPalin;
+     return ans;
     }
   }
 
@@ -429,6 +442,24 @@ public class Main {
       l1.addLast(d);
     }
 
-    System.out.println(l1.IsPalindrome());
+    int n2 = Integer.parseInt(br.readLine());
+    LinkedList l2 = new LinkedList();
+    String[] values2 = br.readLine().split(" ");
+    for (int i = 0; i < n2; i++) {
+      int d = Integer.parseInt(values2[i]);
+      l2.addLast(d);
+    }
+
+    LinkedList sum = LinkedList.addTwoLists(l1, l2);
+
+    int a = Integer.parseInt(br.readLine());
+    int b = Integer.parseInt(br.readLine());
+
+    l1.display();
+    l2.display();
+    sum.display();
+    sum.addFirst(a);
+    sum.addLast(b);
+    sum.display();
   }
 }

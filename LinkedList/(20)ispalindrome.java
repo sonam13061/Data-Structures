@@ -393,39 +393,42 @@ public class Main {
       tail.next = null;
     }
 
-   public static int addTwoListsHelper(Node l1node,int pvl1,Node l2node,int pvl2,LinkedList ans){
-       
-       if(pvl1==0 && pvl2==0){
-           return 0;
-       }
-       if(pvl1>pvl2){
-            int carry=addTwoListsHelper(l1node.next,pvl1-1,l2node,pvl2,ans);
-            int val=carry+l1node.data;
-            ans.addFirst(val%10);
-            return val/10;
-       }
-       else if(pvl2>pvl1){
-            int carry=addTwoListsHelper(l1node,pvl1,l2node.next,pvl2-1,ans);
-            int val=carry+l2node.data;
-            ans.addFirst(val%10);
-            return val/10;
-       }
-       else{
-           int carry=addTwoListsHelper(l1node.next,pvl1-1,l2node.next,pvl2-1,ans);
-            int val=carry+l1node.data+l2node.data;
-            ans.addFirst(val%10);
-            return val/10;
-       }
-   }
-    public static LinkedList addTwoLists(LinkedList one, LinkedList two) {
+    public boolean IsPalindrome() {
       // write your code here
-     LinkedList ans=new LinkedList();
-     int carry=addTwoListsHelper(one.head,one.size,two.head,two.size,ans);
-     
-     if(carry==1){
-         ans.addFirst(1);
-     }     
-      return ans;    
+      //Break the list into two halves.
+      
+      //FInd Mid of LinkedList
+      Node mid=midNode(this.head,this.tail);
+      //Make a Temperory list 
+      LinkedList temp=new LinkedList();
+      //Point temperory list to the second half 
+      temp.head=mid.next;
+      temp.tail=this.tail;
+      temp.size=this.size/2;
+      //set mid.next to null,Now we have 2 lists in 1st list we have 1st element,and elemensts of second half is in temp\
+      
+      mid.next=null;
+    
+      //Now revere the 2nd half.
+      temp.reversePI();
+      //if the list is palindrome then elements of both the list should be same.
+      //If we got any point where element is not equal then we will mark ispalin as true and break the loop.
+      
+        Node t1=this.head;
+        Node t2=temp.head;
+      boolean ispalin=true;
+      while(t1!=null && t2!=null){
+          if(t1.data!=t2.data){
+              ispalin=false;
+              break;
+          }
+          t1=t1.next;
+          t2=t2.next;
+      }
+      //At last again combine the list.
+      temp.reversePI();
+      mid.next=temp.head;
+      return ispalin;
     }
   }
 
@@ -440,24 +443,6 @@ public class Main {
       l1.addLast(d);
     }
 
-    int n2 = Integer.parseInt(br.readLine());
-    LinkedList l2 = new LinkedList();
-    String[] values2 = br.readLine().split(" ");
-    for (int i = 0; i < n2; i++) {
-      int d = Integer.parseInt(values2[i]);
-      l2.addLast(d);
-    }
-
-    LinkedList sum = LinkedList.addTwoLists(l1, l2);
-
-    int a = Integer.parseInt(br.readLine());
-    int b = Integer.parseInt(br.readLine());
-
-    l1.display();
-    l2.display();
-    sum.display();
-    sum.addFirst(a);
-    sum.addLast(b);
-    sum.display();
+    System.out.println(l1.IsPalindrome());
   }
 }
