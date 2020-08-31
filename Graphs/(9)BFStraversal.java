@@ -26,9 +26,9 @@ public class Main {
        //Initially add source and its path to the queue.
        q.add(new Pair(src,src+""));
        while(q.size()>0){
-           //Remove everytime the 1st element of queue.
+           //Remove  1st element of queue.
            Pair p=q.remove();
-           //if it is already visited ,do nothing else do the following work
+           //if it has already visited ,do nothing else do the following work
            if(visited[p.src]==false){
                //Print its path
            System.out.println(p.src+"@"+p.path);

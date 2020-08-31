@@ -78,58 +78,25 @@ public class Main {
     display(node.left);
     display(node.right);
   }
-  public static void printKLevelsDown(Node node, int k,Node block){
-    // write your code here
-    
-    if(node==block){
-        return;
-    }
-    if(k==0){
-        System.out.println(node.data);
-        return;
-        
-    }
-     if(node.left!=null){
-      printKLevelsDown(node.left,k-1,block);
-     }
-     if(node.right!=null){
-      printKLevelsDown(node.right,k-1,block);
-     }
-  }
-  public static ArrayList<Node> nodeToRootPath(Node node, int data){
-    // write your code here
-    if(node==null){
-        return new ArrayList<Node>();
-    }
-    if(node.data==data){
-        ArrayList<Node> list=new ArrayList<>();
-        list.add(node);
-        return list;
-    }
-    
-      ArrayList<Node> path=nodeToRootPath(node.left,data);
-      if(path.size()>0){
-          path.add(node);
-          return path;
-      }
-      ArrayList<Node> rpath=nodeToRootPath(node.right,data);
-      if(rpath.size()>0){
-          rpath.add(node);
-          return rpath;
-      }
-       return new ArrayList<Node>();
-  }
-  public static void printKNodesFar(Node node, int data, int k) {
-    // write your code here
-    ArrayList<Node> path=nodeToRootPath(node,data);
-    for(int i=0;i<path.size() && i<=k;i++){
-        Node block=null;
-        if(i!=0){
-            block=path.get(i-1);
-        }
-         printKLevelsDown(path.get(i),k-i,block);
-    }
 
+  public static Node removeLeaves(Node node){
+    // write your code here
+      if(node==null){
+          return null;
+      }
+      if(node.left!=null){
+          if(node.left.left==null && node.left.right==null){
+              node.left=null;
+          }
+      }
+      if(node.right!=null){
+          if(node.right.left==null && node.right.right==null){
+              node.right=null;
+          }
+      }
+      removeLeaves(node.left);
+      removeLeaves(node.right);
+      return node;
   }
 
   public static void main(String[] args) throws Exception {
@@ -145,11 +112,9 @@ public class Main {
       }
     }
 
-    int data = Integer.parseInt(br.readLine());
-    int k = Integer.parseInt(br.readLine());
-
     Node root = construct(arr);
-    printKNodesFar(root, data, k);
+    root = removeLeaves(root);
+    display(root);
   }
 
 }

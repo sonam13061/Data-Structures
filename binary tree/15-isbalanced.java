@@ -104,7 +104,7 @@ public class Main {
  }
  static boolean isbalanced=true;
  public static int ht(Node node){
-     if(node==null){
+     if(node==null|| isbalanced==false){
          return -1;
      }
      int lh=ht(node.left);

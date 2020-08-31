@@ -58,9 +58,7 @@ public class Main {
             } else if (ch > slh) {
                 slh = ch;
             }
-
-        }
-        
+        }        
             int diameter = lh + slh + 2;
             if (diameter > maxdia) {
                 maxdia = diameter;
@@ -70,31 +68,7 @@ public class Main {
         ht++;
         return ht;
     }
-    //diameter of leaf nodes.
-    public static int diameterofleaf(Node node) {
-        int ht = -1;
-        int lh = -1, slh = -1;
-        for (int i = 0; i < node.children.size(); i++) {
-            int ch = diameter(node.children.get(i));
-            ht = Math.max(ht, ch);
-            if (ch > lh) {
-                slh = lh;
-                lh = ch;
-            } else if (ch > slh) {
-                slh = ch;
-            }
-
-        }
-        if (lh != -1 && slh != -1) {
-            int diameter = lh + slh + 2;
-            if (diameter > maxdia) {
-                maxdia = diameter;
-            }
-        }
-
-        ht++;
-        return ht;
-    }
+    
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());

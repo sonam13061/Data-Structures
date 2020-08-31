@@ -28,10 +28,7 @@ public static void main(String[] args) throws Exception {
     int ans[]=new int[arr.length];
     Stack<Integer> st=new Stack<>();
     for(int i=arr.length-1;i>=0;i--){
-        if(st.size()==0){
-            ans[i]=-1;
-        }
-        else{
+        
             while(st.size()>0 && st.peek()<arr[i]){
                 st.pop();
             }
@@ -42,7 +39,7 @@ public static void main(String[] args) throws Exception {
             else{
             ans[i]=st.peek();
             }
-        }
+        
         st.push(arr[i]);
     }
     return ans;

@@ -28,6 +28,7 @@ public static void main(String[] args) throws Exception {
    // solve
    int ans[]=new int[arr.length];
    Stack<Integer> st=new Stack<>();
+  //basically we are finding index of next greater element in left.
    for(int i=0;i<arr.length;i++){
        //Remove elements until value of index stored at top is less than current value.
        while(st.size()>0 && arr[st.peek()]<arr[i]){
